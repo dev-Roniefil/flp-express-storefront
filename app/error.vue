@@ -13,16 +13,32 @@
       </div>
     </section>
 
-    <div class="page-main-section container error-body">
-      <h2>{{ is404 ? 'Page not found' : 'Something went wrong' }}</h2>
-      <p>
+    <!-- Error Body -->
+    <div class="container max-w-[640px] text-center px-5 py-5 pt-15 pb-25 mx-auto">
+      <h2 class="text-navy text-3xl font-bold mb-3">
+        {{ is404 ? 'Page not found' : 'Something went wrong' }}
+      </h2>
+      <p class="text-slate-500 mb-7 leading-relaxed">
         {{ is404
           ? "The page you’re looking for doesn’t exist or has been moved."
           : error?.message || 'An unexpected error occurred.' }}
       </p>
-      <div class="actions">
-        <NuxtLink to="/" class="btn-primary">Back to Home</NuxtLink>
-        <button type="button" class="btn-primary btn-large" @click="handleClear">Try again</button>
+      
+      <!-- Actions -->
+      <div class="flex justify-center flex-wrap gap-3">
+        <NuxtLink 
+          to="/" 
+          class="bg-brand-orange hover:bg-navy text-white px-7 py-3.5 rounded-lg font-semibold inline-block transition-colors duration-200"
+        >
+          Back to Home
+        </NuxtLink>
+        <button 
+          type="button" 
+          class="bg-brand-orange hover:bg-navy text-white px-7 py-3.5 rounded-lg font-semibold cursor-pointer transition-colors duration-200"
+          @click="handleClear"
+        >
+          Try again
+        </button>
       </div>
     </div>
 
@@ -46,61 +62,3 @@ useHead({
   title: is404.value ? 'Page Not Found' : 'Error'
 })
 </script>
-
-<style scoped>
-.error-body {
-  text-align: center;
-  padding: 60px 20px 100px;
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.error-body h2 {
-  color: #0c2340;
-  font-size: 2rem;
-  margin-bottom: 12px;
-}
-
-.error-body p {
-  color: #64748b;
-  margin-bottom: 28px;
-  line-height: 1.6;
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  background: #F49322;
-  color: #fff;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-primary:hover {
-  background: #0c2340;
-}
-
-.btn-secondary {
-  background: #fff;
-  color: #0c2340;
-  border: 2px solid #0c2340;
-  padding: 12px 26px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-secondary:hover {
-  background: #0c2340;
-  color: #fff;
-}
-</style>

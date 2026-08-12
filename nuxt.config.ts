@@ -12,9 +12,9 @@ export default defineNuxtConfig({
   },
 
   css: [
+    'bootstrap/dist/css/bootstrap.min.css',
       '~/assets/css/main.css',
       '~/assets/css/pages.css',
-      'bootstrap/dist/css/bootstrap.min.css'
     ],
 
   app: {
@@ -56,5 +56,7 @@ export default defineNuxtConfig({
       ]
     }
   },
+
+  modules: ['@nuxtjs/tailwindcss'],
 
 })

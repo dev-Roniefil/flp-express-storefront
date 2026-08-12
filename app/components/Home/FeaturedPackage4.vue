@@ -1,83 +1,90 @@
 <template>
-  <section class="featured-bundles" id="packages">
-    <div class="container">
-      <div class="section-header">
-        <h2 v-fade class="section-title">
-          Festive Express makes<br>professional <span>holiday lighting</span> simple.
+  <section class="py-[70px] bg-white scroll-mt-[110px] bg-[url('/Images/LV.png')] bg-no-repeat bg-[position:50%] bg-cover" id="packages">
+    <div class="container mx-auto px-4">
+      <!-- Section Header -->
+      <div class="text-center mb-10">
+        <h2 v-fade class="text-navy uppercase font-bold text-2xl sm:text-3xl lg:text-4xl max-sm:text-[1.125rem] max-sm:leading-[1.3]">
+          Festive Express makes<br>professional <span class="text-brand-orange">holiday lighting</span> simple.
         </h2>
-        <p v-fade class="subtitle">
+        <p v-fade class="text-black max-w-[80%] mx-auto leading-[1.3] text-xl max-sm:text-[0.95rem] mt-2">
           Choose one of three fixed packages.<br>
           Pay once. Pick your install date and take-down date. We handle the rest.
         </p>
       </div>
 
-      <div class="packages-cards-row">
+      <!-- Package Cards Row -->
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] max-sm:grid-cols-1 gap-8 max-sm:gap-12 justify-items-center mb-12">
         <div
           v-for="pkg in packageProducts"
           :key="pkg.id"
-          class="package-card-v2"
+          class="w-full max-w-[340px] rounded-[28px] overflow-visible shadow-[0_14px_36px_rgba(28,45,91,0.28)]"
         >
-          <div class="card-top">
-            <div class="card-image">
+          <!-- Card Top -->
+          <div class="relative p-3 pb-0">
+            <div class="rounded-[22px] border-4 border-brand-orange overflow-hidden relative leading-none">
               <img
                 :src="getImageUrl(pkg.image_url)"
                 :alt="pkg.name"
+                class="w-full h-[200px] object-cover block"
               >
+              <!-- Glossy Shine Overlay -->
+              <div class="absolute -top-1/2 -left-[150%] w-[200%] h-[200%] bg-[linear-gradient(60deg,rgba(255,255,255,0)_20%,rgba(255,255,255,0.08)_40%,rgba(255,255,255,0.35)_50%,rgba(255,255,255,0.08)_60%,rgba(255,255,255,0)_80%)] rotate-[25deg] pointer-events-none animate-[glossyShineContinuous_3s_linear_infinite]"></div>
             </div>
 
             <img
-              class="pkg-title-img"
+              class="absolute left-[45px] max-sm:left-5 -bottom-[38px] max-sm:-bottom-[28px] h-[72px] max-sm:h-[56px] w-auto z-[2] pointer-events-none drop-shadow-[0_4px_8px_rgba(0,0,0,0.25)]"
               :src="getPackageTitleImage(pkg.name)"
               :alt="pkg.name"
             >
 
-            <div class="lights-badge" aria-hidden="true">
+            <div class="absolute right-[16px] max-sm:right-3 -bottom-[30px] max-sm:-bottom-[24px] w-[76px] h-[76px] max-sm:w-[64px] max-sm:h-[64px] rounded-full bg-brand-orange flex items-center justify-center z-[3] shadow-[0_6px_16px_rgba(244,147,33,0.45)]" aria-hidden="true">
               <img
-                class="sparkle-img"
+                class="absolute -left-[46px] top-[7px] w-[100px] h-[100px] object-contain -z-10"
                 src="/Images/Holiday-Lighting-Package/starburst.png"
                 alt=""
               >
               <img
-                class="lights-icon-img"
+                class="w-[76px] h-[76px] max-sm:w-[64px] max-sm:h-[64px] object-contain"
                 :src="getPackageIcon(pkg.name)"
                 alt=""
               >
             </div>
-          </div> <!-- Proper closing tag for card-top -->
+          </div>
 
-          <div class="card-panel">
-            <div class="description-tooltip">
+          <!-- Card Panel -->
+          <div class="flex items-end justify-between gap-3 pb-[22px] pt-[140px] max-sm:pt-[100px] -mt-[90px] max-sm:-mt-[70px] rounded-[28px] bg-navy max-sm:flex-wrap max-sm:gap-2.5 px-[18px] max-sm:px-[14px]">
+            <!-- Tooltip Action Button -->
+            <div class="relative">
               <button
                 type="button"
-                class="btn-inclusions"
+                class="btn-inclusions flex flex-col items-center justify-center gap-1.5 bg-transparent border-2 border-white/90 rounded-xl text-white text-[0.75rem] max-sm:text-[0.72rem] font-semibold leading-[1.25] text-center py-3 px-4 max-sm:py-2.5 max-sm:px-3 cursor-pointer transition-colors duration-200"
                 @click.stop="openTooltipId = openTooltipId === pkg.id ? null : pkg.id"
               >
-                <!-- @mouseenter="openTooltipId = pkg.id"
-                @mouseleave="openTooltipId = null" -->
-                <i class="fas fa-gift"></i>
-                <span>Explore Package<br>Details</span>
+                <i class="fas fa-gift text-[1.4rem] text-brand-orange"></i>
+                <span class="block text-center">Explore Package<br>Details</span>
               </button>
 
+              <!-- Tooltip Content -->
               <div
-                class="tooltip-content"
-                :class="{ show: openTooltipId === pkg.id }"
+                class="absolute top-full left-0 bg-white border border-gray-300 rounded-xl p-3.5 w-[280px] max-w-[90vw] shadow-[0_10px_25px_rgba(28,45,91,0.15)] opacity-0 invisible transition-all duration-250 z-30 mt-2 text-left text-navy"
+                :class="{ '!opacity-100 !visible': openTooltipId === pkg.id }"
               >
                 <template v-if="pkg.variations?.length">
                   <div
                     v-for="(variation, vIndex) in pkg.variations"
                     :key="vIndex"
-                    class="variation-group"
+                    class="mb-2 last:mb-0"
                   >
-                    <strong>{{ variation.name }}:</strong>
+                    <strong class="block mb-1">{{ variation.name }}:</strong>
                     <div
                       v-for="(option, oIndex) in variation.options"
                       :key="oIndex"
-                      class="feature-line"
+                      class="flex items-center gap-2.5 py-1.5 border-b border-gray-300 text-sm last:border-b-0"
                     >
                       <img
                         v-if="option.image_url"
                         :src="getImageUrl(option.image_url)"
-                        class="option-preview"
+                        class="w-10 h-10 object-cover rounded-md"
                         alt=""
                       >
                       {{ option.name }}
@@ -88,27 +95,34 @@
               </div>
             </div>
 
-            <div class="right-actions">
-              <div class="price">${{ Number(pkg.price).toFixed(2) }}</div>
+            <!-- Price & Cart Actions -->
+            <div class="flex flex-col items-end gap-2.5">
+              <div class="text-[1.65rem] max-sm:text-[1.4rem] font-extrabold text-white">${{ Number(pkg.price).toFixed(2) }}</div>
               <button
                 type="button"
-                class="btn-cart"
+                class="w-12 h-12 border-none rounded-xl bg-brand-orange text-white cursor-pointer flex items-center justify-center transition-colors duration-200 hover:bg-[#ff890b] hover:animate-[festive-express-animation-pulse-grow_0.3s_linear_infinite_alternate]"
                 :aria-label="`Select ${pkg.name}`"
                 @click="selectPackage(pkg)"
               >
-                <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-shopping-cart text-[1.2rem] text-white"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="footer-note">
-        <h4 class="mb-5">
+      <!-- Footer Note -->
+      <div class="text-center mt-6 mb-4">
+        <h4 class="text-black font-medium leading-[1.3] max-w-[80%] mx-auto mb-5 text-lg">
           Every package is professionally installed, maintained through the season,
           and taken down when you’re ready. You simply enjoy the holidays.
         </h4>
-        <NuxtLink to="/packages" class="btn-primary-card">Which Package Fits Your Home?</NuxtLink>
+        <NuxtLink 
+          to="/packages" 
+          class="relative overflow-hidden border-2 border-navy inline-block font-semibold px-6 py-3 rounded-lg bg-brand-orange text-white animate-[festive-express-animation-pulse-grow_0.5s_linear_infinite_alternate] after:content-[''] after:absolute after:-top-1/2 after:-left-[150%] after:w-[200%] after:h-[200%] after:bg-[linear-gradient(60deg,rgba(255,255,255,0)_20%,rgba(255,255,255,0.08)_40%,rgba(255,255,255,0.35)_50%,rgba(255,255,255,0.08)_60%,rgba(255,255,255,0)_80%)] after:rotate-[25deg] after:pointer-events-none after:animate-[glossyShineContinuous_3s_linear_infinite]"
+        >
+          Which Package Fits Your Home?
+        </NuxtLink>
       </div>
     </div>
   </section>
@@ -184,398 +198,11 @@ const getPackageIcon = (name: string) => {
   if (n.includes('merry')) return `${BASE}/Icon3.png`
   return `${BASE}/Icon1.png`
 }
-
-// Static for Placeholder Temp
-// const getPackagePhoto = (name: string) => {
-//   const n = name.toLowerCase()
-//   if (n.includes('jolly')) return `${BASE}/JollyPhoto.webp`
-//   if (n.includes('merry')) return `${BASE}/MERRYphoto.webp`
-//   return `${BASE}/JoyPhoto.webp`
-// }
-
 </script>
 
 <style scoped>
-/* Brand tokens */
-.featured-bundles {
-  --navy: #0c2340;
-  --orange: #ff7a00;
-  --gray: #D6D7D8;
-
-  padding: 70px 0;
-  background: #fff;
-  scroll-margin-top: 110px;
-  background-image: url(/Images/LV.png);
-  background-repeat: no-repeat;
-  background-position: 50%;
-  background-size: cover;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.section-title {
-  color: var(--navy);
-  text-transform: uppercase;
-  font-weight: bold;
-}
-.section-title span{
-  color: var(--orange);
-}
-
-.subtitle {
-  color: #000;
-  max-width: 80%;
-  margin: 0 auto;
-  line-height: 1.3;
-  font-size: 1.25rem
-}
-
-.packages-cards-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
-  justify-items: center;
-  margin-bottom: 48px;
-}
-
-.package-card-v2 {
-  width: 100%;
-  max-width: 340px;
-  border-radius: 28px;
-  /* background: var(--navy); */
-  overflow: visible;
-  box-shadow: 0 14px 36px rgba(28, 45, 91, 0.28);
-}
-
-.card-top {
-  position: relative;
-  padding: 12px 12px 0;
-  /* background: var(--navy); */
-}
-
-.card-image {
-  border-radius: 22px;
-  border: 4px solid var(--orange);
-  overflow: hidden;
-  line-height: 0;
-
-  position: relative;
-  overflow: hidden;
-}
-
-.card-image img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-}
-
-.card-image::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -150%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    rgba(255, 255, 255, 0) 20%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0.35) 50%,
-    rgba(255, 255, 255, 0.08) 60%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  transform: rotate(25deg);
-  pointer-events: none;
-  animation: glossyShineContinuous 3s linear infinite;
-}
-
-
-.pkg-title-img {
-  position: absolute;
-  left: 45px;
-  bottom: -38px;
-  height: 72px;
-  width: auto;
-  z-index: 2;
-  pointer-events: none;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
-}
-
-.lights-badge {
-  position: absolute;
-  right: 16px;
-  bottom: -30px;
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background: var(--orange);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  box-shadow: 0 6px 16px rgba(244, 147, 33, 0.45);
-}
-
-.lights-icon-img {
-  width: 76px;
-  height: 76px;
-  object-fit: contain;
-}
-
-.sparkle-img {
-  position: absolute;
-  left: -46px;
-  top: 7px;
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  z-index: -1;
-}
-
-/* .card-panel {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 140px 18px 22px;
-  background: var(--navy);
-  border-radius: 28px 28px 0 0;
-  margin-top: -90px;
-} */
-
-.card-panel {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 140px 18px 22px;
-  margin-top: -90px;
-  border-radius: 28px 28px 28px 28px;
-
-  background-color: var(--navy);
-  /* background-image: url('/Images/LV.png');
-  background-repeat: no-repeat;
-  background-position: center; */
-  /* background-size: 200%; or contain / 100% 100% */
-}
-
-.btn-inclusions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.25;
-  text-align: center;
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-}
-
 .btn-inclusions:hover {
-  border-color: var(--orange);
-  background: rgba(244, 147, 33, 0.15);
-}
-
-.btn-inclusions i {
-  font-size: 1.4rem;
-  color: var(--orange);
-}
-
-.btn-inclusions span {
-  display: block;
-  text-align: center;
-}
-
-.right-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-}
-
-.price {
-  font-size: 1.65rem;
-  font-weight: 800;
-  color: #fff;
-}
-
-.btn-cart {
-  width: 48px;
-  height: 48px;
-  border: none;
-  border-radius: 12px;
-  background: var(--orange);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-}
-
-.btn-cart:hover {
-  background: #ff890b;
-  animation-name: festive-express-animation-pulse-grow;
-  animation-duration: 0.3s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-.btn-cart i {
-  font-size: 1.2rem;
-  color: #fff;
-}
-
-.description-tooltip {
-  position: relative;
-}
-
-.tooltip-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  border: 1px solid var(--gray);
-  border-radius: 12px;
-  padding: 14px;
-  width: 280px;
-  max-width: 90vw;
-  box-shadow: 0 10px 25px rgba(28, 45, 91, 0.15);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.25s ease;
-  z-index: 30;
-  margin-top: 8px;
-  text-align: left;
-  color: var(--navy);
-}
-
-.tooltip-content.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.feature-line {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--gray);
-  font-size: 0.9rem;
-}
-
-.option-preview {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-.footer-note {
-  text-align: center;
-  margin-top: 24px;
-  margin-bottom: 16px;
-}
-
-.footer-note h4 {
-  color: #000;
-  font-weight: 500;
-  line-height: 1.3;
-  max-width: 80%;
-  margin: 0 auto;
-}
-
-.btn-primary-card {
-  position: relative;
-  overflow: hidden;
-
-  border: 2px solid var(--navy);
-
-  animation-name: festive-express-animation-pulse-grow;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-.btn-primary-card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -150%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    rgba(255, 255, 255, 0) 20%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0.35) 50%,
-    rgba(255, 255, 255, 0.08) 60%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  transform: rotate(25deg);
-  pointer-events: none;
-  animation: glossyShineContinuous 3s linear infinite;
-}
-
-@media (max-width: 576px) {
-  .section-title {
-    font-size: 1.5rem;
-    line-height: 1.3;
-  }
-
-  .subtitle {
-    font-size: 0.95rem;
-  }
-
-  .packages-cards-row {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  .pkg-title-img {
-    left: 20px;
-    bottom: -28px;
-    height: 56px;
-  }
-
-  .lights-badge {
-    right: 12px;
-    bottom: -24px;
-    width: 64px;
-    height: 64px;
-  }
-
-  .lights-icon-img {
-    width: 64px;
-    height: 64px;
-  }
-
-  .card-panel {
-    padding: 100px 14px 18px; /* less top space */
-    margin-top: -70px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .btn-inclusions {
-    font-size: 0.72rem;
-    padding: 10px 12px;
-  }
-
-  .price {
-    font-size: 1.4rem;
-  }
+  border-color: var(--orange, #ff7a00) !important;
+  background: rgba(244, 147, 33, 0.15) !important;
 }
 </style>

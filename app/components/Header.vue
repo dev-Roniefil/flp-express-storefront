@@ -1,17 +1,17 @@
 <template>
-  <header>
+  <header class="sticky top-0 z-[9999] w-full shadow-md">
     <!-- Top Bar -->
-    <div class="top-bar">
-      <div class="container">
-        <div class="top-content">
+    <div class="bg-[#0c2340] text-white py-2.5 text-base font-semibold">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-2 md:gap-0 text-center">
           <!-- Social Icons (Left) -->
-          <div class="social-icons">
+          <div class="flex gap-4 justify-center md:justify-start md:ml-6 order-1 md:order-2">
             <a
               v-if="settings.social_facebook"
               :href="settings.social_facebook"
               target="_blank"
               rel="noopener"
-              class="social-link"
+              class="text-white text-[1.25rem] md:text-[1.5rem] transition-all duration-300 hover:text-[#F49322] hover:-translate-y-1"
               aria-label="Facebook"
             ><i class="fab fa-facebook"></i></a>
             <a
@@ -19,7 +19,7 @@
               :href="settings.social_instagram"
               target="_blank"
               rel="noopener"
-              class="social-link"
+              class="text-white text-[1.25rem] md:text-[1.5rem] transition-all duration-300 hover:text-[#F49322] hover:-translate-y-1"
               aria-label="Instagram"
             ><i class="fab fa-instagram"></i></a>
             <a
@@ -27,7 +27,7 @@
               :href="settings.social_x"
               target="_blank"
               rel="noopener"
-              class="social-link"
+              class="text-white text-[1.25rem] md:text-[1.5rem] transition-all duration-300 hover:text-[#F49322] hover:-translate-y-1"
               aria-label="X"
             ><i class="fab fa-x-twitter"></i></a>
             <a
@@ -35,7 +35,7 @@
               :href="settings.social_youtube"
               target="_blank"
               rel="noopener"
-              class="social-link"
+              class="text-white text-[1.25rem] md:text-[1.5rem] transition-all duration-300 hover:text-[#F49322] hover:-translate-y-1"
               aria-label="YouTube"
             ><i class="fab fa-youtube"></i></a>
             <a
@@ -43,13 +43,13 @@
               :href="settings.social_pinterest"
               target="_blank"
               rel="noopener"
-              class="social-link"
+              class="text-white text-[1.25rem] md:text-[1.5rem] transition-all duration-300 hover:text-[#F49322] hover:-translate-y-1"
               aria-label="Pinterest"
             ><i class="fab fa-pinterest-p"></i></a>
           </div>
 
           <!-- Welcome Message (Centered) -->
-          <div class="welcome">
+          <div class="welcome order-2 md:order-1 text-xs sm:text-sm md:text-base mx-auto">
             Welcome to
             <span class="highlight">
               <span class="brand-text">Festive Express</span>
@@ -60,36 +60,33 @@
           </div>
 
           <!-- Spacer div to keep grid center mathematically aligned -->
-          <div class="top-bar-spacer"></div>
-           
-
-
+          <div class="hidden md:block order-3"></div>
         </div>
       </div>
     </div>
 
     <!-- Main Header -->
-    <div class="main-header" :class="{ sticky: isSticky }">
-      <div class="container">
-        <div class="header-content">
+    <div class="bg-white py-3 md:py-4 transition-all duration-300 w-full">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between gap-2.5 md:gap-8 flex-nowrap">
           <!-- Logo -->
-          <NuxtLink to="/" class="logo">
-            <img src="/Images/FE-Logo.png" alt="FLP Express Logo" class="logo-img">
-            <p class="tagline">Rent • Relax • Celebrate</p>
+          <NuxtLink to="/" class="flex flex-col items-start md:items-center gap-1 text-transparent">
+            <img src="/Images/FE-Logo.png" alt="FLP Express Logo" class="max-h-[42px] sm:max-h-[48px] lg:max-h-[70px]">
+            <p class="m-0 text-[0.75rem] md:text-base text-[#1d3156] font-semibold text-center">Rent • Relax • Celebrate</p>
           </NuxtLink>
 
           <!-- Desktop nav -->
-          <nav class="main-menu desktop-nav">
-            <ul>
-              <li><NuxtLink to="/">Home</NuxtLink></li>
-              <li><NuxtLink to="/packages">Packages</NuxtLink></li>
-              <li><NuxtLink to="/how-it-works">How It Works</NuxtLink></li>
-              <li><NuxtLink to="/contact">Contact Us</NuxtLink></li>
+          <nav class="hidden md:block">
+            <ul class="flex gap-4 lg:gap-8 list-none p-0 m-0">
+              <li><NuxtLink to="/" class="text-[#1a2b4a] no-underline px-2.5 lg:px-4 py-2 font-medium transition-colors hover:text-[#ff7a00]">Home</NuxtLink></li>
+              <li><NuxtLink to="/packages" class="text-[#1a2b4a] no-underline px-2.5 lg:px-4 py-2 font-medium transition-colors hover:text-[#ff7a00]">Packages</NuxtLink></li>
+              <li><NuxtLink to="/how-it-works" class="text-[#1a2b4a] no-underline px-2.5 lg:px-4 py-2 font-medium transition-colors hover:text-[#ff7a00]">How It Works</NuxtLink></li>
+              <li><NuxtLink to="/contact" class="text-[#1a2b4a] no-underline px-2.5 lg:px-4 py-2 font-medium transition-colors hover:text-[#ff7a00]">Contact Us</NuxtLink></li>
             </ul>
           </nav>
 
           <!-- Right actions -->
-          <div class="header-actions">
+          <div class="flex items-center gap-3 shrink-0">
             <a href="tel:9412394722" class="contact-box btn-secondary-2">
               <span class="phone-icon"><i class="fas fa-phone"></i></span>
               <div class="contact-text">
@@ -101,29 +98,29 @@
             <!-- Hamburger -->
             <button
               type="button"
-              class="menu-toggle"
+              class="md:hidden flex flex-col justify-center gap-1.25 w-[42px] h-[42px] p-2 border border-[#0c2340] rounded-lg bg-white cursor-pointer"
               :aria-expanded="mobileOpen"
               aria-label="Toggle menu"
               @click="mobileOpen = !mobileOpen"
             >
-              <span />
-              <span />
-              <span />
+              <span class="block h-[2px] w-full bg-[#0c2340] rounded-sm" />
+              <span class="block h-[2px] w-full bg-[#0c2340] rounded-sm" />
+              <span class="block h-[2px] w-full bg-[#0c2340] rounded-sm" />
             </button>
           </div>
         </div>
 
         <!-- Mobile nav -->
-        <nav class="mobile-nav" :class="{ open: mobileOpen }">
-          <ul>
-            <li><NuxtLink to="/" @click="mobileOpen = false">Home</NuxtLink></li>
-            <li><NuxtLink to="/packages" @click="mobileOpen = false">Packages</NuxtLink></li>
-            <li><NuxtLink to="/how-it-works" @click="mobileOpen = false">How It Works</NuxtLink></li>
-            <li><NuxtLink to="/contact" @click="mobileOpen = false">Contact Us</NuxtLink></li>
+        <nav 
+          class="md:hidden overflow-hidden transition-[max-height] duration-300 ease-in-out"
+          :class="mobileOpen ? 'max-h-[420px]' : 'max-h-0'"
+        >
+          <ul class="list-none m-0 pt-3 pb-2 px-0">
+            <li><NuxtLink to="/" class="block py-3 px-1 text-[#0c2340] no-underline font-semibold border-b border-gray-200 hover:text-[#F49322]" @click="mobileOpen = false">Home</NuxtLink></li>
+            <li><NuxtLink to="/packages" class="block py-3 px-1 text-[#0c2340] no-underline font-semibold border-b border-gray-200 hover:text-[#F49322]" @click="mobileOpen = false">Packages</NuxtLink></li>
+            <li><NuxtLink to="/how-it-works" class="block py-3 px-1 text-[#0c2340] no-underline font-semibold border-b border-gray-200 hover:text-[#F49322]" @click="mobileOpen = false">How It Works</NuxtLink></li>
+            <li><NuxtLink to="/contact" class="block py-3 px-1 text-[#0c2340] no-underline font-semibold border-b border-gray-200 hover:text-[#F49322]" @click="mobileOpen = false">Contact Us</NuxtLink></li>
           </ul>
-          <!-- <a :href="telHref" class="mobile-call" @click="mobileOpen = false">
-            <i class="fas fa-phone-alt"></i> {{ settings.contact_phone_display || '(941) 239-4722' }}
-          </a> -->
           <a href="tel:9412394722" class="mobile-call" @click="mobileOpen = false">
             <i class="fas fa-phone-alt"></i> {{ settings.contact_phone_display || '(941) 239-4722' }}
           </a>
@@ -136,16 +133,12 @@
 <script setup lang="ts">
 const { settings, loadSettings, telHref } = useSettings()
 
-const isSticky = ref(false)
 const mobileOpen = ref(false)
 
 const { cartTotal, cartCount, loadCart } = useCart()
 
-const handleScroll = () => {
-  isSticky.value = window.scrollY > 120
-}
-
 const router = useRouter()
+const route = useRoute()
 
 const scrollTo = async (id: string) => {
   if (route.path !== '/') {
@@ -158,277 +151,20 @@ const scrollTo = async (id: string) => {
 onMounted(() => {
   loadCart()
   loadSettings()
-  window.addEventListener('scroll', handleScroll)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
 })
 
 // Close menu on route change
-const route = useRoute()
 watch(() => route.fullPath, () => {
   mobileOpen.value = false
 })
-
 </script>
 
 <style scoped>
-.top-bar {
-  background: #0c2340;
-  color: white;
-  padding: 10px 0;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.top-content {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-}
-
+/* Welcome Text & SVG Animation */
 .welcome {
   text-align: center;
-  grid-column: 2;
 }
 
-.social-icons {
-  display: flex;
-  gap: 16px;
-  justify-content: flex-start;
-  grid-column: 1;
-  margin-left: 25px;
-}
-
-.top-bar-spacer {
-  grid-column: 3;
-}
-
-.main-header {
-  background: transparent;
-  padding: 20px 0;
-  transition: all 0.3s ease;
-}
-
-.main-header.sticky {
-  background: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-}
-
-.logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  color: transparent;
-}
-
-.logo-img {
-  max-height: 70px;
-}
-
-.main-menu ul {
-  display: flex;
-  gap: 32px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.main-menu a {
-  color: #1a2b4a;
-  text-decoration: none;
-  padding: 8px 16px;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.main-menu a:hover {
-  color: #ff7a00;
-}
-
-.tagline {
-  margin: 0;
-  font-size: 1rem;
-  color: #1d3156;
-  font-weight: 600;
-  text-align: center;
-}
-
-.contact-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #fff;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  background: #ff890b !important;
-  border: 3px solid #0c2340;
-}
-
-.contact-box:hover {
-  background: #0c2340 !important;
-  color: #ff890b !important;
-  /* transform: translateY(-2px); */
-  animation-name: festive-express-animation-pulse-grow;
-  animation-duration: 0.3s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  border: 3px solid #ff890b;
-}
-
-
-
-
-
-
-/* 3D Glossy Orange Pill Button */
-.contact-box.btn-secondary-2 {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 0.6rem 2rem;
-  border-radius: 50px; /* Fully rounded pill shape */
-  text-decoration: none;
-  color: #ffffff;
-  font-family: inherit;
-  
-  /* Vibrant Orange-Red Gradient Body */
-  background: linear-gradient(180deg, #ff7a00 0%, #ff4500 50%, #e02e00 100%);
-  
-  /* Thick Red Outer Border & Soft Shadow */
-  /* border: 4px solid #cc1100; */
-  border: none;
-  box-shadow: 
-    0 6px 12px rgba(0, 0, 0, 0.35),         /* Drop shadow underneath */
-    inset 0 2px 3px rgba(255, 255, 255, 0.6); /* Inner edge top glow */
-  
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* Inner Glossy Top Rim Highlight */
-.contact-box.btn-secondary-2::before {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 6px;
-  right: 6px;
-  height: 45%;
-  border-radius: 40px 40px 20px 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.05) 100%);
-  pointer-events: none;
-}
-
-.contact-box.btn-secondary-2::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -150%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    rgba(255, 255, 255, 0) 20%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0.35) 50%,
-    rgba(255, 255, 255, 0.08) 60%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  transform: rotate(25deg);
-  pointer-events: none;
-  animation: glossyShineContinuous 3s linear infinite;
-}
-
-/* Hover & Active States */
-.contact-box.btn-secondary-2:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 16px rgba(0, 0, 0, 0.4),
-    inset 0 2px 4px rgba(255, 255, 255, 0.8);
-}
-
-.contact-box.btn-secondary-2:active {
-  transform: translateY(1px);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-}
-
-/* Typography & Icon Layout */
-.contact-box .phone-icon {
-  font-size: 1.25rem;
-  color: #ffffff;
-  position: relative;
-  z-index: 1;
-}
-
-.contact-box .contact-text {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  line-height: 1.5;
-  position: relative;
-  z-index: 1;
-}
-
-.contact-box .phone-number {
-  font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-.contact-box .call-now {
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 1px;
-  opacity: 0.95;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-
-
-
-
-.phone-icon {
-  font-size: 1.6rem;
-  color: inherit;
-}
-
-.contact-text {
-  text-align: left;
-  line-height: 1.2;
-}
-
-.phone-number {
-  font-size: 1.15rem;
-  font-weight: 700;
-}
-
-.call-now {
-  font-size: 0.85rem;
-  font-weight: 500;
-  opacity: 0.9;
-}
-
-/* highlight Welcome */
 .highlight {
   position: relative;
   display: inline-block;
@@ -474,77 +210,127 @@ watch(() => route.fullPath, () => {
   100% { stroke-dashoffset: 800; opacity: 0.6; }
 }
 
-/* Social Icons */
-.social-link {
-  color: white;
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.social-link:hover {
-  color: #F49322;
-  transform: translateY(-4px);
-}
-
-.header-actions {
+.contact-box {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-shrink: 0;
-}
-
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 42px;
-  height: 42px;
-  padding: 8px;
-  border: 1px solid #0c2340;
-  border-radius: 8px;
-  background: #fff;
-  cursor: pointer;
-}
-
-.menu-toggle span {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background: #0c2340;
-  border-radius: 2px;
-}
-
-.mobile-nav {
-  display: none;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.mobile-nav.open {
-  max-height: 420px;
-}
-
-.mobile-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 12px 0 8px;
-}
-
-.mobile-nav a {
-  display: block;
-  padding: 12px 4px;
-  color: #0c2340;
+  color: #fff;
   text-decoration: none;
-  font-weight: 600;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: #ff890b !important;
+  border: 3px solid #0c2340;
 }
 
-.mobile-nav a:hover {
-  color: #F49322;
+.contact-box:hover {
+  background: #0c2340 !important;
+  color: #ff890b !important;
+  animation-name: festive-express-animation-pulse-grow;
+  animation-duration: 0.3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  border: 3px solid #ff890b;
 }
 
+/* 3D Glossy Contact Box Button */
+.contact-box.btn-secondary-2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.6rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  color: #ffffff;
+  font-family: inherit;
+  background: linear-gradient(180deg, #ff890b 0%, #ff890b 50%, #ff890b 100%);
+  border: none;
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.35),
+    inset 0 2px 3px rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact-box.btn-secondary-2::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  right: 6px;
+  height: 45%;
+  border-radius: 40px 40px 20px 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
+.contact-box.btn-secondary-2::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -150%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.08) 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.08) 60%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  animation: glossyShineContinuous 3s linear infinite;
+}
+
+.contact-box.btn-secondary-2:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.contact-box.btn-secondary-2:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.contact-box .phone-icon {
+  font-size: 1.25rem;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-box .contact-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-box .phone-number {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.contact-box .call-now {
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile Call Action Button */
 .mobile-call {
   display: flex;
   align-items: center;
@@ -559,55 +345,22 @@ watch(() => route.fullPath, () => {
   border: none !important;
 }
 
-/* ===== Tablet ===== */
-@media (max-width: 1024px) {
-  .header-content { gap: 16px; }
-  .main-menu ul { gap: 16px; }
-  .main-menu a { padding: 8px 10px; font-size: 0.95rem; }
-  .contact-box { padding: 6px 10px; }
-  .phone-number { font-size: 1rem; }
-  .logo-img { max-height: 60px; }
-}
-
-/* ===== Mobile ===== */
+/* Mobile adjustments for contact button */
 @media (max-width: 768px) {
-  .top-bar { padding: 8px 0; font-size: 0.9rem; }
-  
-  .top-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
+  .contact-box .contact-text { 
+    display: none; 
   }
-
-  .top-bar-spacer { display: none; }
-
-  .social-icons {
-    gap: 14px;
-    justify-content: center;
+  .contact-box { 
+    padding: 8px; 
+    border-radius: 50%; 
+    background: rgba(12, 35, 64, 0.08); 
   }
-
-  .social-link { font-size: 1.25rem; }
-  .main-header { padding: 12px 0; }
-  .header-content { gap: 10px; flex-wrap: nowrap; }
-  .logo { align-items: flex-start; }
-  .logo-img { max-height: 48px; }
-  .tagline { font-size: 0.75rem; }
-
-  .desktop-nav { display: none !important; }
-  .contact-box .contact-text { display: none; }
-  .contact-box { padding: 8px; border-radius: 50%; background: rgba(12, 35, 64, 0.08); }
-  .phone-icon { font-size: 1.15rem; }
-
-  .menu-toggle { display: flex; }
-  .mobile-nav { display: block; }
-
-  .main-header.sticky { padding: 10px 0; }
-}
-
-@media (max-width: 480px) {
-  .welcome { font-size: 0.85rem; }
-  .underline-svg { height: 12px; bottom: -4px; }
-  .logo-img { max-height: 42px; }
+  .contact-box .phone-icon { 
+    font-size: 1.15rem; 
+  }
+  .underline-svg { 
+    height: 12px; 
+    bottom: -4px; 
+  }
 }
 </style>

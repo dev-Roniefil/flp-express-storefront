@@ -1,46 +1,60 @@
 <template>
-  <section class="packages-compare">
-    <div class="container">
-      <h2 v-fade class="section-title">CHOOSE YOUR <span class="highlight">HOLIDAY</span> PACKAGE</h2>
-      <p v-fade class="section-sub">COMPARE WHAT’S INCLUDED IN EACH PLAN</p>
+  <section class="relative bg-[url('/Images/Choose-Your-Package.webp')] bg-cover bg-center bg-no-repeat bg-scroll md:bg-fixed py-20 z-[1] border-t-5 border-brand-orange">
+    <!-- Optional Overlay -->
+    <div class="absolute inset-0 z-[-1] pointer-events-none"></div>
 
-      <div class="compare-grid">
+    <div class="max-w-[1280px] mx-auto px-5">
+      <!-- Section Headers -->
+      <h2 v-fade class="text-center font-black text-white tracking-wider drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] text-2xl sm:text-3xl lg:text-4xl max-sm:text-[1.2rem] max-sm:leading-[1.3] uppercase">
+        CHOOSE YOUR <span class="text-brand-orange">HOLIDAY</span> PACKAGE
+      </h2>
+      <p v-fade class="text-center text-[#e2e8f0] mb-[50px] text-[1.15rem] font-bold tracking-[0.5px] uppercase max-w-[50%] max-sm:max-w-[80%] mx-auto leading-[1.3] max-sm:text-[0.95rem] mt-2 fade-up is-visible">
+        COMPARE WHAT’S INCLUDED IN EACH PLAN
+      </p>
+
+      <!-- Compare Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-[30px] items-stretch max-lg:max-w-[420px] max-lg:mx-auto">
         <div 
-          class="package-col" 
           v-for="pkg in packageProducts" 
           :key="pkg.id"
+          class="bg-brand-orange border-4 border-brand-orange rounded-[28px] flex flex-col relative overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.35)]"
           :class="{ popular: pkg.is_popular }"
         >
           <!-- Package Header -->
-          <div class="package-header">
-            <div class="title-img-wrapper">
+          <div class="p-[20px] flex items-center justify-between bg-[#0c2340] min-h-[90px]">
+            <div class="flex items-center flex-1">
               <img
-                class="pkg-title-img"
+                class="h-[60px] w-auto max-w-[160px] object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]"
                 :src="getPackageTitleImage(pkg.name)"
                 :alt="pkg.name"
               >
             </div>
-            <div class="price">${{ Number(pkg.price).toLocaleString() }}</div>
+            <div class="text-[2.2rem] font-black text-white ml-3">
+              ${{ Number(pkg.price).toLocaleString() }}
+            </div>
           </div>
 
           <!-- Package Body / Inclusions -->
-          <div class="inclusions-wrapper">
-            <div class="inclusions">
+          <div class="bg-white rounded-b-[70px] pt-[24px] px-[20px] pb-[60px] flex-1 bg-[url('/Images/LV.png')] bg-no-repeat bg-[position:50%] bg-cover">
+            <div class="flex flex-col gap-[16px] w-full">
               <template v-for="(variation, vIndex) in pkg.variations" :key="vIndex">
                 <div
-                  class="inclusion-item"
                   v-for="(option, oIndex) in variation.options"
                   :key="`${vIndex}-${oIndex}`"
+                  class="flex items-center gap-[16px] w-full"
                 >
-                  <div class="img-circle">
+                  <div class="w-[56px] h-[56px] rounded-full border-3 border-brand-orange overflow-hidden shrink-0 bg-white flex items-center justify-center shadow-[0_4px_8px_rgba(0,0,0,0.1)]">
                     <img
                       :src="getImageUrl(option.image_url)"
                       :alt="option.name"
+                      class="w-full h-full object-cover"
                       @error="handleImgError"
                     >
                   </div>
-                  <div class="inclusion-text">
-                    <strong>{{ option.name }}</strong>
+                  <div>
+                    <strong class="text-[0.95rem] text-[#0c2340] font-extrabold leading-[1.3] block">
+                      {{ option.name }}
+                    </strong>
                   </div>
                 </div>
               </template>
@@ -48,8 +62,11 @@
           </div>
 
           <!-- Bottom Orange Shell with Overlapping Button -->
-          <div class="package-footer">
-            <button class="select-btn" @click="selectPackage(pkg)">
+          <div class="bg-transparent px-[16px] pb-[16px] flex justify-center items-center z-[2]">
+            <button 
+              class="w-[85%] bg-brand-orange text-white border-2 border-[#0c2340] rounded-[50px] py-[12px] px-[16px] text-[0.95rem] font-black tracking-[0.5px] uppercase cursor-pointer shadow-[0_4px_10px_rgba(0,0,0,0.15)] transition-transform duration-200 ease-in-out hover:bg-[#0c2340] hover:text-white hover:-translate-y-[2px] -mt-[30px]" 
+              @click="selectPackage(pkg)"
+            >
               {{ getPackageButtonText(pkg) }}
             </button>
           </div>
@@ -60,6 +77,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+
 const config = useRuntimeConfig()
 
 const packages = ref<Array<{
@@ -140,210 +159,3 @@ const getPackageButtonText = (pkg: { name: string; id?: string | number }) => {
   return `Choose ${pkg.name}`
 }
 </script>
-
-<style scoped>
-/* Main Section Background using #0c2340 */
-.packages-compare {
-  position: relative;
-  /* 1. Add background image with parallax effect */
-  background-image: url('/Images/Choose-Your-Package.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* Creates the Parallax Effect */
-
-  /* 2. Optional: Add an overlay padding so text remains readable */
-  padding: 80px 0;
-  z-index: 1;
-  border-top: 5px solid #ff890b;
-}
-
-/* Optional: Dark Overlay to keep comparison text legible */
-.packages-compare::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* background: rgba(12, 35, 64, 0.75);  */
-  z-index: -1;
-}
-
-/* iOS Safari Parallax Fix (Prevents rendering glitches on mobile devices) */
-@supports (-webkit-touch-callout: none) {
-  .packages-compare {
-    background-attachment: scroll;
-  }
-}
-
-/* Titles */
-.section-title {
-  text-align: center;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: 1px;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-.section-sub {
-  text-align: center;
-  color: #e2e8f0;
-  margin-bottom: 50px;
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-/* Compare Grid */
-.compare-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  align-items: stretch;
-}
-
-/* Outer Card Container with #ff890b border */
-.package-col {
-  background: #ff890b; /* Solid orange background for top border & bottom shell */
-  border: 4px solid #ff890b;
-  border-radius: 28px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-/* Header Container */
-.package-header {
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #0c2340;
-  min-height: 90px;
-}
-
-.title-img-wrapper {
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-
-.pkg-title-img {
-  height: 60px;
-  width: auto;
-  max-width: 160px;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-}
-
-.package-header .price {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #ffffff;
-  margin-left: 12px;
-}
-
-/* Inner Body Box */
-.inclusions-wrapper {
-  background: #ffffff;
-  border-bottom-left-radius: 70px; 
-  border-bottom-right-radius: 70px;
-  padding: 24px 20px 60px; /* Adds bottom breathing room inside the white card */
-  flex: 1;
-  background-image: url(/Images/LV.png);
-  background-repeat: no-repeat;
-  background-position: 50%;
-  background-size: cover;
-}
-
-.inclusions {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
-/* Inclusion Items */
-.inclusion-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-}
-
-/* Circular Images with #ff890b border */
-.img-circle {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 3px solid #ff890b;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.img-circle img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.inclusion-text strong {
-  font-size: 0.95rem;
-  color: #0c2340;
-  font-weight: 800;
-  line-height: 1.3;
-  display: block;
-}
-
-/* Footer & Action Button */
-.package-footer {
-  background: transparent;
-  padding: 0 16px 16px; /* Bottom padding inside the orange shell */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-}
-
-.select-btn {
-  width: 85%;
-  background: #ff890b;
-  color: #ffffff;
-  border: 2px solid #0c2340; 
-  border-radius: 50px;       
-  padding: 12px 16px;
-  font-size: 0.95rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, background-color 0.2s ease;
-  margin-top: -30px;
-}
-
-.select-btn:hover {
-  background: #0c2340;
-  color: #ffffff;
-  transform: translateY(-2px);
-}
-
-/* Responsive breakpoint */
-@media (max-width: 992px) {
-  .compare-grid {
-    grid-template-columns: 1fr;
-    max-width: 420px;
-    margin: 0 auto;
-  }
-}
-
-</style>

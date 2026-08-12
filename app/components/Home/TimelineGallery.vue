@@ -1,35 +1,36 @@
 <template>
-  <section class="timeline-section">
+  <section class="w-full bg-[#0c1a35] text-white py-20 relative overflow-hidden bg-[url('/Images/LV.png')] bg-no-repeat bg-[position:50%] bg-cover">
 
-    <div class="timeline-header">
-        <h2 v-fade class="section-title text-uppercase">Our Wonderful <span class="highlight">HOLIDAY</span> Stories</h2>
-        <p v-fade class="subtitle">Journey through our favorite seasonal moments and cherished memories captured over the years.</p>
+    <!-- Timeline Header -->
+    <div class="text-center px-5 sm:pb-5 relative z-[2] sm:mb-10">
+      <h2 v-fade class="font-extrabold text-white text-uppercase text-2xl sm:text-3xl lg:text-4xl max-sm:text-[1.2rem] max-sm:leading-[1.3]">Our Wonderful <span class="text-brand-orange">HOLIDAY</span> Stories</h2>
+      <p v-fade class="text-white max-w-[50%] max-sm:max-w-[80%] mx-auto leading-[1.3] text-xl max-sm:text-[0.95rem] mt-2 fade-up is-visible">Journey through our favorite seasonal moments and cherished memories captured over the years.</p>
     </div>
     
     <!-- Interactive Guidance Overlay -->
     <Transition name="fade">
       <div 
         v-if="showOverlay" 
-        class="drag-hint-overlay" 
+        class="absolute inset-0 bg-[#0c1a35]/75 backdrop-blur-sm flex items-center justify-center z-20 cursor-pointer" 
         @click="dismissOverlay"
         @mousedown="dismissOverlay"
         @touchstart.passive="dismissOverlay"
       >
-        <div class="hint-content">
-          <h2 class="hint-title">CLICK &amp; DRAG TO NAVIGATE</h2>
-          <p class="hint-subtitle">Move the cursor left and right to view our gallery.</p>
+        <div class="text-center text-white pointer-events-none p-5">
+          <h2 class="text-2xl sm:text-3xl font-black tracking-widest mb-2 text-white uppercase">CLICK &amp; DRAG TO NAVIGATE</h2>
+          <p class="text-base text-[#d1dbe8] mb-6">Move the cursor left and right to view our gallery.</p>
           
           <!-- Animated Hand Icon -->
-          <div class="hand-icon-wrapper">
-            <svg class="hand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div class="flex flex-col items-center gap-2 animate-[slide-hand_1.8s_ease-in-out_infinite]">
+            <svg class="w-12 h-12 stroke-white" viewBox="0 0 24 24" fill="none" stroke-width="2">
               <path d="M18 11V6a2 2 0 0 0-4 0v5" />
               <path d="M14 10V4a2 2 0 0 0-4 0v6" />
               <path d="M10 10.5V6a2 2 0 0 0-4 0v9" />
               <path d="M18 11a2 2 0 0 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.8-6.7-2.8l-3.2-3.2a2 2 0 0 1 2.8-2.8l1.1 1.1" />
             </svg>
-            <div class="drag-arrows">
+            <div class="flex items-center gap-1.5 text-lg text-[#1cb5a3] font-bold">
               <span>&larr;</span>
-              <span class="dots">&bull;&bull;&bull;</span>
+              <span>&bull;&bull;&bull;</span>
               <span>&rarr;</span>
             </div>
           </div>
@@ -40,8 +41,8 @@
     <!-- Horizontal Scroll Track with Mouse Drag & Touch Support -->
     <div 
       ref="trackRef" 
-      class="timeline-track"
-      :class="{ 'is-dragging': isTrackDragging }"
+      class="flex items-center gap-[60px] overflow-x-auto scroll-smooth py-5 px-[80px] select-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      :class="{ 'cursor-grabbing !scroll-auto': isTrackDragging, 'cursor-grab': !isTrackDragging }"
       @scroll="onTrackScroll"
       @mousedown="startTrackDrag"
       @mouseleave="stopTrackDrag"
@@ -54,62 +55,69 @@
       <template v-for="(item, index) in timelineItems" :key="item.id || index">
         
         <!-- Timeline Card -->
-        <div class="timeline-card">
+        <div class="flex items-center gap-6 shrink-0">
           <!-- Image Left Layout -->
           <template v-if="item.imagePosition === 'left'">
-            <div v-if="item.image" class="card-media clickable" @click="openLightbox(item.image)">
-              <img :src="item.image" :alt="item.year || 'Gallery Image'" draggable="false" />
+            <div 
+              v-if="item.image" 
+              class="shrink-0 w-full relative overflow-hidden cursor-pointer aspect-[16/10] rounded-2xl bg-[#0c1a35] outline outline-2 outline-[rgba(255,122,0,0.2)] -outline-offset-2 shadow-[0_8px_20px_rgba(0,0,0,0.15)] transition-all duration-300 hover:outline-brand-orange hover:outline-offset-4 hover:shadow-[0_12px_28px_rgba(0,0,0,0.25)] hover:scale-[1.02] hover:brightness-[1.05]" 
+              @click="openLightbox(item.image)"
+            >
+              <img :src="item.image" :alt="item.year || 'Gallery Image'" draggable="false" class="w-full h-[280px] max-w-[400px] max-md:h-[200px] max-md:max-w-[280px] max-sm:h-[160px] max-sm:max-w-[220px] object-cover pointer-events-none block" />
             </div>
-            <div v-if="item.year || item.description" class="card-content">
-              <span v-if="item.year" class="year-header">{{ item.year }}</span>
-              <p v-if="item.description">{{ item.description }}</p>
+            <div v-if="item.year || item.description">
+              <span v-if="item.year" class="text-[3.5rem] font-extrabold text-[#d18d45] leading-none block mb-3">{{ item.year }}</span>
+              <p v-if="item.description" class="text-[0.92rem] leading-relaxed text-[#cfd8e8]">{{ item.description }}</p>
             </div>
           </template>
 
           <!-- Image Right Layout -->
           <template v-else>
-            <div v-if="item.year || item.description" class="card-content">
-              <span v-if="item.year" class="year-header">{{ item.year }}</span>
-              <p v-if="item.description">{{ item.description }}</p>
+            <div v-if="item.year || item.description">
+              <span v-if="item.year" class="text-[3.5rem] font-extrabold text-[#d18d45] leading-none block mb-3">{{ item.year }}</span>
+              <p v-if="item.description" class="text-[0.92rem] leading-relaxed text-[#cfd8e8]">{{ item.description }}</p>
             </div>
-            <div v-if="item.image" class="card-media clickable" @click="openLightbox(item.image)">
-              <img :src="item.image" :alt="item.year || 'Gallery Image'" draggable="false" />
+            <div 
+              v-if="item.image" 
+              class="shrink-0 w-full relative overflow-hidden cursor-pointer aspect-[16/10] rounded-2xl bg-[#0c1a35] outline outline-2 outline-[rgba(255,122,0,0.2)] -outline-offset-2 shadow-[0_8px_20px_rgba(0,0,0,0.15)] transition-all duration-300 hover:outline-brand-orange hover:outline-offset-4 hover:shadow-[0_12px_28px_rgba(0,0,0,0.25)] hover:scale-[1.02] hover:brightness-[1.05]" 
+              @click="openLightbox(item.image)"
+            >
+              <img :src="item.image" :alt="item.year || 'Gallery Image'" draggable="false" class="w-full h-[280px] max-w-[400px] max-md:h-[200px] max-md:max-w-[280px] max-sm:h-[160px] max-sm:max-w-[220px] object-cover pointer-events-none block" />
             </div>
           </template>
         </div>
 
         <!-- Lightbox Modal -->
         <Transition name="fade">
-        <div v-if="activeImage" class="lightbox-overlay" @click.self="closeLightbox">
-            <button class="lightbox-close" @click="closeLightbox" aria-label="Close modal">&times;</button>
-            <div class="lightbox-content">
-            <img :src="activeImage" alt="Enlarged view" />
+          <div v-if="activeImage" class="fixed inset-0 w-screen h-screen bg-black/85 flex items-center justify-center z-[9999] p-5" @click.self="closeLightbox">
+            <button class="absolute top-5 right-[25px] bg-transparent border-none text-white text-[2.5rem] leading-none cursor-pointer z-[10000] transition-transform duration-200 hover:text-brand-orange hover:scale-[1.15]" @click="closeLightbox" aria-label="Close modal">&times;</button>
+            <div class="max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+              <img :src="activeImage" alt="Enlarged view" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.5)]" />
             </div>
-        </div>
+          </div>
         </Transition>
 
         <!-- Optional Centerpiece/Divider between cards -->
-        <div v-if="item.dividerImage" class="timeline-divider">
-          <img :src="item.dividerImage" alt="Timeline Divider" draggable="false" />
+        <div v-if="item.dividerImage">
+          <img :src="item.dividerImage" alt="Timeline Divider" draggable="false" class="h-[320px] shrink-0 pointer-events-none" />
         </div>
 
       </template>
     </div>
 
     <!-- Bottom Ornament Navigation Bar -->
-    <div ref="navBarRef" class="timeline-nav-bar">
-      <div class="nav-track-line"></div>
+    <div ref="navBarRef" class="relative w-[85%] max-w-[1100px] h-[60px] mx-auto mt-[20px] flex items-center">
+      <div class="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#ff7a00] via-[#ff9e43] to-[#ff7a00] -translate-y-1/2 rounded-[2px]"></div>
 
       <!-- Draggable Spinner Indicator -->
-       <!-- :style="{ left: scrollProgress + '%', transform: `translateX(-50%) rotate(${spinnerRotation}deg)` }" -->
       <div 
-        class="spinner-indicator"
-        :class="{ 'is-dragging': isSpinnerDragging }"
+        class="absolute top-1/2 w-[70px] h-[70px] -mt-[35px] -translate-x-1/2 select-none touch-none z-[5] transition-none will-change-[left]"
+        :class="{ 'cursor-grabbing': isSpinnerDragging, 'cursor-grab': !isSpinnerDragging }"
         :style="{ left: scrollProgress + '%' }"
         @mousedown="startSpinnerDrag"
         @touchstart="startSpinnerDrag"
-        >
-        <img :src="spinnerImage" alt="Timeline Ornament" draggable="false" />
+      >
+        <img :src="spinnerImage" alt="Timeline Ornament" draggable="false" class="w-full h-full object-contain pointer-events-none -scale-x-100" />
       </div>  
     </div>
   </section>
@@ -132,27 +140,20 @@ const dismissOverlay = () => {
 
 // Timeline Data Array
 const timelineItems = ref([
-  // Start strong with a fun portrait instead of a dark house exterior
   { id: 7, year: '', description: '', image: '/Images/Gallery/Festive-Images-7.webp', imagePosition: 'right', dividerImage: null },
   { id: 13, year: '', description: '', image: '/Images/Gallery/Festive-Images-13.webp', imagePosition: 'left', dividerImage: null },
   { id: 1, year: '', description: '', image: '/Images/Gallery/Festive-Images-1.webp', imagePosition: 'right', dividerImage: null },
   { id: 19, year: '', description: '', image: '/Images/Gallery/Festive-Images-19.webp', imagePosition: 'left', dividerImage: null },
   { id: 17, year: '', description: '', image: '/Images/Gallery/Festive-Images-17.webp', imagePosition: 'right', dividerImage: null },
-
-  // Group selfie / fun shot mid-early section
   { id: 14, year: '', description: '', image: '/Images/Gallery/Festive-Images-14.webp', imagePosition: 'right', dividerImage: null },
   { id: 10, year: '', description: '', image: '/Images/Gallery/Festive-Images-10.webp', imagePosition: 'right', dividerImage: null },
   { id: 9, year: '', description: '', image: '/Images/Gallery/Festive-Images-9.webp', imagePosition: 'right', dividerImage: null },
   { id: 4, year: '', description: '', image: '/Images/Gallery/Festive-Images-4.webp', imagePosition: 'right', dividerImage: null },
-
-  // Playful character photo near the middle
   { id: 15, year: '', description: '', image: '/Images/Gallery/Festive-Images-15.webp', imagePosition: 'right', dividerImage: null },
   { id: 20, year: '', description: '', image: '/Images/Gallery/Festive-Images-20.webp', imagePosition: 'left', dividerImage: null },
   { id: 8, year: '', description: '', image: '/Images/Gallery/Festive-Images-8.webp', imagePosition: 'right', dividerImage: null },
   { id: 18, year: '', description: '', image: '/Images/Gallery/Festive-Images-18.webp', imagePosition: 'right', dividerImage: null },
   { id: 2, year: '', description: '', image: '/Images/Gallery/Festive-Images-2.webp', imagePosition: 'right', dividerImage: null },
-
-  // Colorful pathway detail leading into the final stretch
   { id: 16, year: '', description: '', image: '/Images/Gallery/Festive-Images-16.webp', imagePosition: 'right', dividerImage: null },
   { id: 11, year: '', description: '', image: '/Images/Gallery/Festive-Images-11.webp', imagePosition: 'right', dividerImage: null },
   { id: 3, year: '', description: '', image: '/Images/Gallery/Festive-Images-3.webp', imagePosition: 'right', dividerImage: null },
@@ -269,7 +270,6 @@ const onSpinnerDrag = (e) => {
   trackRef.value.scrollLeft = (percent / 100) * maxScroll
 }
 
-
 // State for active lightbox image
 const activeImage = ref(null)
 
@@ -287,250 +287,9 @@ const handleKeyDown = (e) => {
     closeLightbox()
   }
 }
-
 </script>
 
 <style scoped>
-.timeline-header {
-  text-align: center;
-  padding: 0 20px 20px;
-  position: relative;
-  z-index: 2;
-  margin-bottom: 40px;
-}
-
-.section-title {
-  font-weight: 800;
-  color: #ffffff;
-}
-
-.subtitle {
-    color: #fff;
-}
-
-
-.timeline-section {
-  width: 100%;
-  background-color: #0c1a35;
-  color: #ffffff;
-  padding: 80px 0;
-  position: relative;
-  overflow: hidden;
-  background-image: url(/Images/LV.png);
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: cover;
-}
-
-/* Horizontal Scroll Container */
-.timeline-track {
-  display: flex;
-  align-items: center;
-  gap: 60px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 20px 80px;
-  cursor: grab;
-  user-select: none;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.timeline-track.is-dragging {
-  cursor: grabbing;
-  scroll-behavior: auto;
-}
-
-.timeline-track::-webkit-scrollbar {
-  display: none;
-}
-
-/* Card Layout */
-.timeline-card {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  flex-shrink: 0;
-}
-
-/* Card Media Responsive Base */
-.card-media {
-  flex-shrink: 0;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  aspect-ratio: 16 / 10;
-  border-radius: 16px;
-  background-color: #0c1a35; /* Solid dark background while image loads */
-  border: none;
-  outline: 2px solid rgba(255, 122, 0, 0.2); /* Subtle orange ring */
-  outline-offset: -2px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-.card-media:hover {
-  outline: 2px solid #ff7a00; /* Crisp primary orange highlight */
-  outline-offset: 4px; /* Pops out on hover */
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
-}
-
-.card-media img {
-  width: 100%;
-  height: 280px;
-  max-width: 400px; /* Limits maximum width on large displays */
-  object-fit: cover;
-  /* border-radius: 10px; */
-  pointer-events: none; /* Prevents native image drag breaking scroll */
-  display: block;
-}
-
-/* Tablet & Mobile Responsiveness */
-@media (max-width: 768px) {
-  .card-media img {
-    height: 200px; /* Reduces image height on smaller viewports */
-    max-width: 280px;
-  }
-}
-
-@media (max-width: 480px) {
-  .card-media img {
-    height: 160px; /* Optimized height for mobile screens */
-    max-width: 220px;
-  }
-}
-
-.year-header {
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: #d18d45;
-  line-height: 1;
-  display: block;
-  margin-bottom: 12px;
-}
-
-.card-content p {
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: #cfd8e8;
-}
-
-.timeline-divider img {
-  height: 320px;
-  flex-shrink: 0;
-  pointer-events: none;
-}
-
-/* Bottom Ornament Nav Bar */
-.timeline-nav-bar {
-  position: relative;
-  width: 85%;
-  max-width: 1100px;
-  height: 60px;
-  margin: 20px auto 0;
-  display: flex;
-  align-items: center;
-}
-
-.nav-track-line {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #ff7a00, #ff9e43, #ff7a00);
-  transform: translateY(-50%);
-  border-radius: 2px;
-}
-
-.spinner-indicator {
-  position: absolute;
-  top: 50%;
-  width: 70px;
-  height: 70px;
-  margin-top: -35px;
-  transform: translateX(-50%); /* Centering handled here instead of inline style */
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
-  z-index: 5;
-  transition: none; /* Prevents CSS transitions from causing lag/jitter during drag */
-  will-change: left; /* Helps browser render smooth movement */
-}
-
-.spinner-indicator.is-dragging {
-  cursor: grabbing;
-}
-
-.spinner-indicator img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  transform: scaleX(-1);
-}
-
-/* Overlay Layer */
-.drag-hint-overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(12, 26, 53, 0.75);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 20;
-  cursor: pointer;
-}
-
-.hint-content {
-  text-align: center;
-  color: #ffffff;
-  pointer-events: none;
-  padding: 20px;
-}
-
-.hint-title {
-  font-size: 2rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-  color: #ffffff;
-  text-transform: uppercase;
-}
-
-.hint-subtitle {
-  font-size: 1rem;
-  color: #d1dbe8;
-  margin-bottom: 24px;
-}
-
-/* Hand & Arrows Animation */
-.hand-icon-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  animation: slide-hand 1.8s ease-in-out infinite;
-}
-
-.hand-icon {
-  width: 48px;
-  height: 48px;
-  stroke: #ffffff;
-}
-
-.drag-arrows {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1.2rem;
-  color: #1cb5a3;
-  font-weight: bold;
-}
-
-/* Slide Left to Right Animation */
 @keyframes slide-hand {
   0%, 100% {
     transform: translateX(-25px);
@@ -540,78 +299,7 @@ const handleKeyDown = (e) => {
   }
 }
 
-/* Smooth Vue Transition Fade Out */
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-leave-to {
-  opacity: 0;
-}
-
-
-/* Make media container indicate clickability */
-.card-media.clickable {
-  cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.card-media.clickable:hover {
-  transform: scale(1.02);
-  filter: brightness(1.05);
-}
-
-/* Lightbox Overlay */
-.lightbox-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  padding: 20px;
-}
-
-.lightbox-content {
-  max-width: 90vw;
-  max-height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.lightbox-content img {
-  max-width: 100%;
-  max-height: 90vh;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  font-size: 2.5rem;
-  line-height: 1;
-  cursor: pointer;
-  z-index: 10000;
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.lightbox-close:hover {
-  color: #ff7a00;
-  transform: scale(1.15);
-}
-
-/* Transition Animations */
+/* Vue Transitions */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease;

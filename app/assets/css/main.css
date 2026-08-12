@@ -1,17 +1,31 @@
 /* assets/css/main.css */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', system-ui, sans-serif;}
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', system-ui, sans-serif;
-  /* padding-top: 195px; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    font-family: 'Poppins', system-ui, sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', system-ui, sans-serif;
+  }
 }
+
+/* Custom container override */
 .container {
   max-width: 1400px !important;
   margin: 0 auto;
   padding: 0 20px;
 }
+
+
 /* header{
   position: fixed;
   top: 0;

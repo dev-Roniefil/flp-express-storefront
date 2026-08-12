@@ -76,22 +76,61 @@ const steps = [
 ]
 
 const visibleSteps = ref(new Set<number>())
+const activeStep = ref(0)
 
+// onMounted(() => {
+//   const observer = new IntersectionObserver((entries) => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+//         const index = parseInt(entry.target.getAttribute('data-index') || '0')
+//         visibleSteps.value.add(index)
+//       }
+//     })
+//   }, { threshold: 0.6 })
+
+//   document.querySelectorAll('.timeline-item').forEach((el, index) => {
+//     el.setAttribute('data-index', index.toString())
+//     observer.observe(el)
+//   })
+// })
 onMounted(() => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const index = parseInt(entry.target.getAttribute('data-index') || '0')
-        visibleSteps.value.add(index)
+  const items = Array.from(document.querySelectorAll('.timeline-item'))
+  if (!items.length) return
+
+  const updateActive = () => {
+    const centerY = window.innerHeight / 2
+    let bestIndex = 0
+    let bestDistance = Infinity
+
+    items.forEach((el, index) => {
+      const rect = el.getBoundingClientRect()
+      const itemCenter = rect.top + rect.height / 2
+      const distance = Math.abs(itemCenter - centerY)
+
+      if (distance < bestDistance) {
+        bestDistance = distance
+        bestIndex = index
       }
     })
-  }, { threshold: 0.6 })
 
-  document.querySelectorAll('.timeline-item').forEach((el, index) => {
-    el.setAttribute('data-index', index.toString())
-    observer.observe(el)
+    activeStep.value = bestIndex
+
+    // optional: fill all steps up to the active one
+    visibleSteps.value = new Set(
+      Array.from({ length: bestIndex + 1 }, (_, i) => i)
+    )
+  }
+
+  updateActive()
+  window.addEventListener('scroll', updateActive, { passive: true })
+  window.addEventListener('resize', updateActive)
+
+  onUnmounted(() => {
+    window.removeEventListener('scroll', updateActive)
+    window.removeEventListener('resize', updateActive)
   })
 })
+
 </script>
 
 <style scoped>

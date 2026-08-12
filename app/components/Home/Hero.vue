@@ -1,36 +1,42 @@
 <template>
-  <div class="hero-banner snow-bgxx">
-    <div class="hero-image-fixed"></div>
+  <div class="hero-banner snow-bgxx relative h-[420px] min-h-[600px] overflow-hidden flex items-center">
+    <!-- Base Fixed Background Image (Desktop) -->
+    <div class="hero-image-fixed absolute inset-0 bg-cover bg-[center_28%] bg-no-repeat bg-fixed z-0 will-change-transform bg-[url('/Images/Banner/hero-image.webp')]"></div>
     
     <!-- Full-width subtle dark overlay -->
-    <div class="overlay"></div>
+    <div class="overlay absolute inset-0 bg-black/15 z-[1]"></div>
 
-    <CountdownWidget class="desktop-widget" :time-left="timeLeft" 
-        :format-number="formatNumber"  />
+    <!-- Desktop Countdown Widget -->
+    <CountdownWidget 
+      class="desktop-widget" 
+      :time-left="timeLeft" 
+      :format-number="formatNumber" 
+    />
     
-    <div class="hero-content-container container">
+    <!-- Outer Content Container -->
+    <div class="hero-content-container relative z-[3] w-full max-w-[1200px] mx-auto px-6 flex justify-between items-center gap-5">
       
-      <!-- Main Glassmorphic Card (Left Side) -->
-      <div class="hero-card">
-        <h1>
+      <!-- Main Glassmorphic Card -->
+      <div class="hero-card relative w-full max-w-[460px] bg-[#161c30]/50 backdrop-blur-md rounded-2xl p-11 px-8 shadow-[0_10px_30px_rgba(0,0,0,0.4)] text-white text-center border border-white/12 overflow-hidden before:content-[''] before:absolute before:-top-1/2 before:-left-[150%] before:w-[200%] before:h-[200%] before:bg-[linear-gradient(60deg,rgba(255,255,255,0)_20%,rgba(255,255,255,0.08)_40%,rgba(255,255,255,0.35)_50%,rgba(255,255,255,0.08)_60%,rgba(255,255,255,0)_80%)] before:rotate-[25deg] before:pointer-events-none before:animate-[glossyShineContinuous_3s_linear_infinite]">
+        <h1 class="text-4xl font-extrabold leading-[1.15] mb-4 tracking-wide text-white">
           HOLIDAY MAGIC<br>
-          <span class="highlight">FULLY INSTALLED</span>
+          <span class="highlight text-[#f7941d]">FULLY INSTALLED</span>
         </h1>
-        <p class="tagline">
+
+        <p class="tagline text-[1.1rem] font-semibold leading-[1.35] mb-7 text-slate-200">
           Giftwrapped in<br class="mobile-only"> One Simple Package.<br>
-          <span class="subtext">(No ladders. No tangled cords.<br class="mobile-only"> No storage. No stress.)</span>
+          <span class="subtext block text-[0.88rem] font-normal mt-1.5 opacity-90">(No ladders. No tangled cords.<br class="mobile-only"> No storage. No stress.)</span>
         </p>
+
         <NuxtLink to="/packages" class="btn-primary-card">Shop the Packages</NuxtLink>
       </div>
 
-      <!-- Single Reusable Countdown Widget Instance -->
+      <!-- Mobile Countdown Widget Instance -->
       <CountdownWidget 
         class="mobile-widget"
         :time-left="timeLeft" 
         :format-number="formatNumber" 
       />
-
-      
 
     </div>
   </div>
@@ -71,130 +77,12 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.hero-banner {
-  position: relative;
-  height: 420px;
-  min-height: 600px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-}
-
-/* Base Fixed Background Image (Desktop) */
-.hero-image-fixed {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('/Images/Banner/hero-image.webp');
-  background-size: cover;
-  background-position: center 28%;
-  background-repeat: no-repeat !important;
-  background-attachment: fixed;
-  z-index: 0;
-  will-change: transform;
-}
-
 /* iOS Safari Fix */
 @supports (-webkit-touch-callout: none) {
   .hero-image-fixed {
     background-attachment: scroll;
   }
 }
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(8, 8, 8, 0.15);
-  z-index: 1;
-}
-
-/* Outer Layout Grid */
-.hero-content-container {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
-/* Glassmorphism Hero Card */
-.hero-card {
-  width: 100%;
-  max-width: 460px;
-  background: rgba(22, 28, 48, 0.50);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 2.75rem 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  color: #ffffff;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-card h1 {
-  font-size: 2.5rem;
-  line-height: 1.15;
-  margin-bottom: 1rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: #ffffff;
-}
-
-.hero-card h1 .highlight {
-  color: #f7941d;
-}
-
-.hero-card .tagline {
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.35;
-  margin-bottom: 1.75rem;
-  color: #e2e8f0;
-}
-
-.hero-card .tagline .subtext {
-  display: block;
-  font-size: 0.88rem;
-  font-weight: 400;
-  margin-top: 0.4rem;
-  opacity: 0.9;
-}
-
-/* Permanent Glossy Sheen Overlay */
-.hero-card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -150%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    rgba(255, 255, 255, 0) 20%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0.35) 50%,
-    rgba(255, 255, 255, 0.08) 60%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  transform: rotate(25deg);
-  pointer-events: none;
-  animation: glossyShineContinuous 3s linear infinite;
-}
-
-
 
 /* Tablet & Mobile Layout Adjustments */
 @media (max-width: 992px) {
@@ -238,7 +126,8 @@ onUnmounted(() => {
     border-radius: 0 !important;
   }
 
-  .hero-card::after {
+  .hero-card::after,
+  .hero-card::before {
     display: none !important;
   }
 
@@ -269,6 +158,12 @@ onUnmounted(() => {
     border-radius: 8px;
     display: inline-block;
     position: relative;
+
+    /* Force left alignment */
+    float: left;
+    clear: both;
+    margin-left: 0 !important;
+    margin-right: auto !important;
   }
 }
 
@@ -297,7 +192,8 @@ onUnmounted(() => {
     animation: glossyShineContinuous 3s linear infinite;
   }
 
-  .hero-card::after {
+  .hero-card::after,
+  .hero-card::before {
     display: none !important;
   }
 }

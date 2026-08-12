@@ -12,29 +12,41 @@
     </section>
 
     <!-- About Us Content Section -->
-    <section class="about-section">
-      <div class="container about-container">
+    <section class="bg-white text-slate-800 py-20">
+      <div class="container flex flex-col lg:flex-row items-center gap-10 lg:gap-12">
+        
         <!-- Content Left -->
-        <div class="about-content">
-          <h2 class="about-title">Bringing Joy Back to the Holidays</h2>
-          <p class="about-lead">
+        <div class="flex-1">
+          <h2 class="text-3xl lg:text-4xl font-extrabold text-navy mb-5 leading-tight">
+            Bringing Joy Back to the Holidays
+          </h2>
+          <p class="text-[1.25rem] font-semibold text-brand-orange mb-4">
             Festive Express, created by Festive Lighting Pros, is simplicity itself.
           </p>
-          <p>
+          <p class="text-[1.05rem] leading-relaxed text-slate-600 mb-4">
             We believe the holidays should feel joyful, not overwhelming. That’s why we designed three clear, fixed-price packages with everything included — lights, décor, installation, and seasonal maintenance. You choose the package that fits your home, select your dates, and we take care of the rest.
           </p>
-          <p>
+          <p class="text-[1.05rem] leading-relaxed text-slate-600 mb-4">
             No custom quotes. No surprise fees. No climbing ladders in December. Just beautiful, professionally installed holiday lights that make your home shine so you can focus on what actually matters: family, friends, and the season itself.
           </p>
-          <p class="about-highlight">
+          <p class="text-[1.05rem] leading-relaxed font-semibold text-navy border-l-4 border-brand-orange pl-4 mt-6">
             Festive Express is a partnership with Festive Lighting Pros, the team known for high-quality outdoor lighting installations across Florida. Same expertise. Same standards. Made simpler.
           </p>
         </div>
 
         <!-- Image Right -->
-        <div class="about-image">
-          <img src="/Images/Gallery/Festive-Images-14.webp" alt="Festive Express Holiday Lighting" />
+        <div class="flex-1 flex justify-center w-full">
+          <div class="about-image relative w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] rounded-full -rotate-12 border-[10px] border-brand-orange shadow-[0_15px_25px_rgba(0,0,0,0.2),0_5px_10px_rgba(0,0,0,0.1)] overflow-hidden will-change-transform">
+            <img 
+              src="/Images/Gallery/Festive-Images-14.webp" 
+              alt="Festive Express Holiday Lighting" 
+              class="w-full h-full object-cover rotate-12 scale-110 origin-center pointer-events-none"
+            />
+            <!-- Continuous Glossy Shine Overlay -->
+            <div class="absolute -top-[50%] -left-[150%] w-[200%] h-[200%] bg-gradient-to-r from-transparent via-white/30 to-transparent rotate-[25deg] pointer-events-none animate-shine" />
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -49,58 +61,6 @@ useHead({
 </script>
 
 <style scoped>
-.about-section {
-  padding: 80px 0;
-  background-color: #ffffff;
-  color: #1a202c;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.about-container {
-  display: flex;
-  align-items: center;
-  gap: 50px;
-}
-
-.about-content {
-  flex: 1;
-}
-
-.about-title {
-  font-size: 2.25rem;
-  font-weight: 800;
-  color: #0c1a35;
-  margin-bottom: 20px;
-  line-height: 1.2;
-}
-
-.about-lead {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #ff7a00;
-  margin-bottom: 16px;
-}
-
-.about-content p {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #4a5568;
-  margin-bottom: 16px;
-}
-
-.about-highlight {
-  font-weight: 600;
-  color: #0c1a35 !important;
-  border-left: 4px solid #ff7a00;
-  padding-left: 16px;
-  margin-top: 24px;
-}
-
 .about-image {
   flex: 1;
   display: flex;
@@ -171,23 +131,7 @@ useHead({
   animation: glossyShineContinuous 3s linear infinite;
 }
 
-/* Tablet & Mobile Responsiveness */
-@media (max-width: 992px) {
-  .about-container {
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .about-title {
-    font-size: 1.85rem;
-  }
-
-  .about-image {
-    width: 100%;
-  }
-
-  .about-image img {
-    max-width: 100%;
-  }
+.animate-shine {
+  animation: glossyShineContinuous 3s linear infinite;
 }
 </style>

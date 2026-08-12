@@ -1,3 +1,5 @@
+// plugins/chat-widget.client.ts
+
 declare global {
   interface Window {
     ChatWidget?: {
@@ -7,18 +9,29 @@ declare global {
 }
 
 export default defineNuxtPlugin(() => {
-  const initWidget = () => {
-    if (window.ChatWidget?.initChatWidget) {
-      window.ChatWidget.initChatWidget({
-        agentId: 'd97c2ca5-19fc-47c9-90fb-ee552735f8e9'
-      })
-    } else {
-      // Retry briefly if script is still loading
-      setTimeout(initWidget, 200)
-    }
-  }
-
-  onNuxtReady(() => {
-    initWidget()
+  useHead({
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://embeddable-widgets.pages.dev/chat-widget.css'
+      }
+    ],
+    script: [
+      {
+        src: 'https://embeddable-widgets.pages.dev/chat-widget.umd.js',
+        async: true,
+        defer: true,
+        onload: () => {
+          if (window.ChatWidget?.initChatWidget) {
+            window.ChatWidget.initChatWidget({
+              agentId: 'd97c2ca5-19fc-47c9-90fb-ee552735f8e9'
+            })
+          }
+        },
+        onerror: (e) => {
+          console.error('Failed to load chat widget:', e)
+        }
+      }
+    ]
   })
 })
